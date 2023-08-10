@@ -4,7 +4,7 @@ import Songs from "./components/Songs";
 import Addsong from "./components/Addsong";
 
 import { Outlet } from "react-router-dom";
-// import Updatesong from "./components/Updatesong";
+import styled from "styled-components";
 
 function App() {
   const [showAddSong, setshowAddSong] = useState(false);
@@ -71,22 +71,15 @@ function App() {
           throw new Error("Network response was not ok");
         }
 
-        // Make a DELETE request to the server to delete the song with the given _id
-        // Then update the state to remove the deleted song from the songs array
         setSongs((prevSongs) => prevSongs.filter((song) => song._id !== _id));
 
-        // response.json().then((data) => {
-        //   setdeleteSong(data);
-        // });
         console.log("Song deleted successfully!");
-        // Handle the deletion from the UI (if needed)
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   };
 
-  // Adding song function
   const addsong = (song) => {
     const newSong = { ...song };
     setSongs([...songs, newSong]);
@@ -105,7 +98,7 @@ function App() {
   //-----------------------------
   return (
     <div>
-      <div className="container">
+      <Container>
         <Outlet />
         <Header
           onAdd={() => {
@@ -128,9 +121,21 @@ function App() {
 
         <Songs songs={songs} deletesong={deletesong} updatesong={updatesong} />
         <p>Click to Update a song</p>
-      </div>
+      </Container>
     </div>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  max-width: 500px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 300px;
+  background-color: rgba(17, 24, 39, 1);
+  border: 1px solid steelblue;
+  padding: 30px;
+  border-radius: 0.75rem;
+  color: rgba(243, 244, 246, 1);
+`;

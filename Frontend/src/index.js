@@ -10,6 +10,8 @@ import {
 import Login from './pages/Login';
 import Register from './pages/Register'
 
+import GlobalStyles from './global'; 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +30,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+     <GlobalStyles /> 
     <RouterProvider router={router} />
   </React.StrictMode>
 );

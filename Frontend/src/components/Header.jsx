@@ -1,19 +1,20 @@
 import Button from "./Button";
+import styled from "styled-components";
 
 const Header = ({ onAdd, change, userId }) => {
-  console.log(userId);
   const separateName = userId.split(" ");
   const nickName = separateName[0];
   return (
-    <header className="header">
-      <h1>Song lists for {`${nickName}`}</h1>
-
+    <HeaderContainer>
+      <HeaderTitle>Song lists for {`${nickName}`}</HeaderTitle>
       <Button
-        color={change ? " rgba(197, 62, 62, 0.821)" : "green"}
+        color={
+          change ? "rgba(197, 62, 62, 0.821)" : " rgba(197, 62, 62, 0.821)"
+        }
         text={change ? "Close" : "Add song"}
         onClick={onAdd}
       />
-    </header>
+    </HeaderContainer>
   );
 };
 
@@ -21,3 +22,11 @@ Header.defaultProps = {
   title: "No hearder title given",
 };
 export default Header;
+
+const HeaderTitle = styled.h1``;
+const HeaderContainer = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;

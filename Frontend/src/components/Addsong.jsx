@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
 const Addsong = ({ onAdd, songartist, songName, _id }) => {
   const [text, setname] = useState(songName);
@@ -36,7 +37,6 @@ const Addsong = ({ onAdd, songartist, songName, _id }) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${bearerToken}`,
-          // Here you can set the Authorization header if needed
         },
         body: JSON.stringify(newSong),
       });
@@ -45,13 +45,11 @@ const Addsong = ({ onAdd, songartist, songName, _id }) => {
         throw new Error("Network response was not ok");
       }
 
-      // Assuming the server returns the new song object after adding it
       const data = await response.json();
 
       // Call the onAdd function passed as a prop to update the parent component's state
       onAdd(data);
 
-      // Clear the input fields after successful addition
       setname("");
       setartist("");
       setreminder(false);
@@ -91,7 +89,6 @@ const Addsong = ({ onAdd, songartist, songName, _id }) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${bearerToken}`,
-          // Here you can set the Authorization header if needed
         },
         body: JSON.stringify(newSong),
       });
@@ -106,7 +103,6 @@ const Addsong = ({ onAdd, songartist, songName, _id }) => {
       // Call the onAdd function passed as a prop to update the parent component's state
       onAdd(data);
 
-      // Clear the input fields after successful addition
       setname("");
       setartist("");
       setreminder(false);
@@ -116,42 +112,82 @@ const Addsong = ({ onAdd, songartist, songName, _id }) => {
   };
 
   return (
-    <form
-      className="add-form"
-      onSubmit={_id === "" ? onCreatesubmit : onUpdatesubmit}
-    >
-      <div className="form-control">
-        <label>Song name</label>
-        <input
+    <AddForm onSubmit={_id === "" ? onCreatesubmit : onUpdatesubmit}>
+      <FormControl>
+        <Label>Song name</Label>
+        <Input
           type="text"
           placeholder="Add song name"
           value={text}
           onChange={(e) => setname(e.target.value)}
         />
-      </div>
+      </FormControl>
 
-      <div className="form-control">
-        <label>Artist</label>
-        <input
+      <FormControl>
+        <Label>Artist</Label>
+        <Input
           type="text"
           placeholder="Add artist"
           value={artist}
           onChange={(e) => setartist(e.target.value)}
         />
-      </div>
+      </FormControl>
 
-      {/* <div className="form-control form-control-check">
-        <label>Reminder</label>
-        <input
-          type="checkbox"
-          checked={reminder}
-          value={reminder}
-          onChange={(e) => setreminder(e.currentTarget.checked)}
-        />
-      </div> */}
-      <input type="submit" value="Save Song" className="btn btn-block" />
-    </form>
+      <ButtonBlock type="submit" value="Save Song" />
+    </AddForm>
   );
 };
 
 export default Addsong;
+
+const AddForm = styled.form`
+  margin-bottom: 40px;
+`;
+
+const FormControl = styled.div`
+  margin: 20px 0;
+`;
+
+const Label = styled.label`
+  display: block;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 40px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 17px;
+`;
+
+const Button = styled.input`
+  display: inline-block;
+  background-color: rgba(197, 62, 62, 0.821);
+
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:hover {
+    background-color: rgba(167, 139, 250, 1);
+  }
+`;
+
+const ButtonBlock = styled(Button)`
+  display: block;
+  width: 100%;
+`;
